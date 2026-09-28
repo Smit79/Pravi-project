@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Accent: lavender (light values; dark overrides below) */
+  --color-brand-50: #f1ecff;
+  --color-brand-100: #e4dbff;
+  --color-brand-500: #8b6cf0;
+  --color-brand-600: #7552e6;
+  --color-brand-700: #5b3cc4;
+  --color-brand-deep: #6d3df0;
+  --color-on-brand: #ffffff;
+  --color-star: #ff4f5e;
+
+  --color-page: #f3f3f5;      /* app frame: sidebar + top bar */
+  --color-canvas: #ebebef;    /* content area behind cards */
+  --color-surface: #ffffff;   /* cards */
+  --color-subtle: #f0f0f3;
+  --color-line: #e3e3e8;
+  --color-line-strong: #cfcfd6;
+  --color-ink: #141416;
+  --color-ink-2: #4a4a52;
+  --color-ink-3: #6e6e78;
+  --color-ink-4: #a0a0aa;
+
+  --color-ok: #12824a;
+  --color-ok-bg: #e6f6ec;
+  --color-warn: #9a6200;
+  --color-warn-bg: #fdf4dc;
+  --color-bad: #c9303c;
+  --color-bad-bg: #fdecee;
+  --color-plan: #6d3df0;
+  --color-plan-bg: #f1ecff;
+  --color-info: #0a7ea4;
+  --color-info-bg: #e3f6fc;
+
+  --shadow-card: 0 1px 2px rgba(20, 20, 22, 0.04);
+  --shadow-pop: 0 16px 32px -8px rgba(20, 20, 22, 0.18), 0 4px 8px -4px rgba(20, 20, 22, 0.08);
+}
+
+/* Dark theme (default look): near-black frame, charcoal cards, lavender accent */
+html.dark {
+  color-scheme: dark;
+  --color-brand-50: #221d33;
+  --color-brand-100: #2d2545;
+  --color-brand-500: #c9b3ff;
+  --color-brand-600: #bba0fb;
+  --color-brand-700: #cdb9ff;
+  --color-brand-deep: #7b3ff2;
+  --color-on-brand: #17141f;
+  --color-star: #ff4f5e;
+
+  --color-page: #0b0b0c;
+  --color-canvas: #111113;
+  --color-surface: #1a1a1c;
+  --color-subtle: #232326;
+  --color-line: #29292d;
+  --color-line-strong: #38383d;
+  --color-ink: #f4f4f5;
+  --color-ink-2: #c4c4ca;
+  --color-ink-3: #8e8e97;
+  --color-ink-4: #5f5f68;
+
+  --color-ok: #4ade80;
+  --color-ok-bg: #11271a;
+  --color-warn: #f5d77a;
+  --color-warn-bg: #2b2412;
+  --color-bad: #ff7b7b;
+  --color-bad-bg: #2e1517;
+  --color-plan: #c9b3ff;
+  --color-plan-bg: #221d33;
+  --color-info: #67d4f0;
+  --color-info-bg: #0f2730;
+
+  --shadow-card: none;
+  --shadow-pop: 0 20px 40px -12px rgba(0, 0, 0, 0.7), 0 4px 10px -4px rgba(0, 0, 0, 0.5);
+}
+
+html, body, #root { height: 100%; }
+body { transition: background-color 180ms ease, color 180ms ease; }
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+.tabular { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+.leaflet-container { font-family: var(--font-sans); isolation: isolate; z-index: 0; }
+.leaflet-popup-content { margin: 12px 14px; }
+.dark .leaflet-popup-content-wrapper, .dark .leaflet-popup-tip { background: var(--color-surface); color: var(--color-ink); box-shadow: var(--shadow-pop); }
+.dark .leaflet-bar a { background: var(--color-surface); color: var(--color-ink); border-color: var(--color-line); }
+.dark .leaflet-bar a:hover { background: var(--color-subtle); }
+.dark .leaflet-control-attribution { background: rgba(26, 26, 28, 0.85); color: var(--color-ink-3); }
+.dark .leaflet-control-attribution a { color: var(--color-brand-700); }
+.dark .leaflet-container { background: #161618; }
+.leaflet-popup-content-wrapper { border-radius: 14px; }
+.leaflet-bar.leaflet-control { border: 1px solid var(--color-line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-pop); }
+.leaflet-bar a, .leaflet-touch .leaflet-bar a { width: 36px; height: 36px; line-height: 36px; background: var(--color-surface); color: var(--color-ink); border-color: var(--color-line); }
+.leaflet-bar a:hover { background: var(--color-subtle); }
+.leaflet-bottom.leaflet-right .leaflet-control-zoom { margin: 0 16px 28px 0; }
+.leaflet-control-attribution { font-size: 10px; border-top-left-radius: 8px; }
+/* Diagonal hatching used for secondary chart series */
+.hatch-line { stroke: var(--color-ink-3); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--color-line-strong); border-radius: 999px; border: 3px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-track { background: transparent; }
+/* Printing a QR tag: only the sticker is printed */
+@media print {
+  body * { visibility: hidden !important; }
+  .print-area, .print-area * { visibility: visible !important; }
+  .print-area { position: fixed; left: 0; top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
